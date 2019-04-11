@@ -29,7 +29,7 @@ Do NOT do this by just replacing the string used for the JLabel in the current B
 
 ## A Better UI For The Player (15 points)
 
-In the current version of the game, the class ```sushigame.vide.PlayerChefView``` is a widget that provides the ability for the player to create only three specific types of Sushi on specific plate colors and placed nearest to specific places on the belt. Rewrite ```PlayerChefView``` so that it allows a player to create any kind of sushi on any color of plate and placed nearest to any spot on the belt. For gold plates, the player should be able to select a price between $5.00 and $10.00. For rolls, the player should be able to include up to (but not more than) 1.5 ounces of any ingredient type.
+In the current version of the game, the class ```sushigame.view.PlayerChefView``` is a widget that provides the ability for the player to create only three specific types of Sushi on specific plate colors and placed nearest to specific places on the belt. Rewrite ```PlayerChefView``` so that it allows a player to create any kind of sushi on any color of plate and placed nearest to any spot on the belt. For gold plates, the player should be able to select a price between $5.00 and $10.00. For rolls, the player should be able to include up to (but not more than) 1.5 ounces of any ingredient type.
 
 ## A Better Scoreboard (5 points)
 
