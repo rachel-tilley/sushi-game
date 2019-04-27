@@ -6,6 +6,7 @@ import java.util.List;
 import comp401sushi.Plate;
 import comp401sushi.RedPlate;
 import comp401sushi.Sushi;
+import comp401sushi.IngredientPortion;
 import comp401sushi.Nigiri.NigiriType;
 import comp401sushi.Plate.Color;
 import comp401sushi.Sashimi.SashimiType;
@@ -17,6 +18,8 @@ public class ChefImpl implements Chef, BeltObserver {
 	private String name;
 	private ChefsBelt belt;
 	private boolean already_placed_this_rotation;
+	private double foodConsumed;
+	private double foodSpoiled;
 	
 	public ChefImpl(String name, double starting_balance, ChefsBelt belt) {
 		this.name = name;
@@ -83,10 +86,23 @@ public class ChefImpl implements Chef, BeltObserver {
 				balance += plate.getPrice();
 				Customer consumer = belt.getCustomerAtPosition(((PlateEvent) e).getPosition());
 				plate_history.add(new HistoricalPlateImpl(plate, consumer));
+				
+				//loops to add amount of each ingredient found in plate
+				IngredientPortion[] ingPortion = plate.getContents().getIngredients();
+				for (int i = 0; i < ingPortion.length; i++) {
+					foodConsumed += ingPortion[i].getAmount();
+				}
+				
 			}
 		} else if (e.getType() == BeltEvent.EventType.PLATE_SPOILED) {
 			Plate plate = ((PlateEvent) e).getPlate();
-			plate_history.add(new HistoricalPlateImpl(plate, null));
+				plate_history.add(new HistoricalPlateImpl(plate, null));
+				
+				IngredientPortion[] ingPortion = plate.getContents().getIngredients();
+				for (int i = 0; i < ingPortion.length; i++) {
+					foodSpoiled += ingPortion[i].getAmount();
+				}
+			
 		} else if (e.getType() == BeltEvent.EventType.ROTATE) {
 			already_placed_this_rotation = false;
 		}
@@ -95,5 +111,17 @@ public class ChefImpl implements Chef, BeltObserver {
 	@Override
 	public boolean alreadyPlacedThisRotation() {
 		return already_placed_this_rotation;
+	}
+
+	@Override
+	public double getSpoiledWeight() {
+		return foodSpoiled;
+		
+	}
+
+	@Override
+	public double getConsumedWeight() {
+		return foodConsumed;
+		
 	}
 }
